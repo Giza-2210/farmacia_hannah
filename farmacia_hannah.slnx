@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="datos/datos.csproj" />
+  <Project Path="logica/logica.csproj" Id="40d66499-f63d-4df1-8ae8-d5e35c03c672" />
+  <Project Path="modelo/modelo.csproj" Id="e6b061e0-ea99-4b20-8ac4-0e0f690ac9a2" />
   <Project Path="Web/Web.csproj" />
 </Solution>
