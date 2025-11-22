@@ -1,1 +1,78 @@
-﻿<h1>Hola </h1>
+﻿@{
+    ViewData["Title"] = "Dashboard - Farmacia";
+}
+
+<div class="container-fluid">
+
+    <!-- TÍTULO -->
+    <h2 class="mb-4 text-primary fw-bold">Dashboard Farmacia</h2>
+
+    <!-- TARJETAS -->
+    <div class="row g-4 mb-4">
+
+        <!-- Ventas del día -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Ventas del día</h6>
+                <h2 class="fw-bold text-success">@ViewBag.VentasHoy</h2>
+                <i class="fa-solid fa-cart-shopping fa-2x text-success"></i>
+            </div>
+        </div>
+
+        <!-- Medicamentos próximos a vencer -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Medicamentos próximos a vencer</h6>
+                <h2 class="fw-bold text-danger">@ViewBag.MedicamentosProximos</h2>
+                <i class="fa-solid fa-prescription-bottle-medical fa-2x text-danger"></i>
+            </div>
+        </div>
+
+        <!-- Total de clientes -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Clientes Registrados</h6>
+                <h2 class="fw-bold">@ViewBag.Clientes</h2>
+                <i class="fa-solid fa-user fa-2x text-primary"></i>
+            </div>
+        </div>
+
+        <!-- Total proveedores -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 p-3">
+                <h6 class="text-muted">Proveedores Activos</h6>
+                <h2 class="fw-bold">@ViewBag.Proveedores</h2>
+                <i class="fa-solid fa-truck fa-2x text-warning"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- GRÁFICA -->
+    <div class="card shadow-sm border-0 p-4">
+        <h5 class="fw-bold mb-3 text-secondary">Ventas de los últimos 7 días</h5>
+        <canvas id="graficaVentas" style="height: 300px;"></canvas>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('graficaVentas');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(ViewBag.LabelsDias)),
+                datasets: [{
+                    label: 'Ventas',
+                    data: @Html.Raw(Json.Serialize(ViewBag.VentasPorDia)),
+                    borderWidth: 2
+                }]
+            }
+        });
+    </script>
+}

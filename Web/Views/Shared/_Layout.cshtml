@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.min.css" />
 
     <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/4a564f3b34.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b5db20e679.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
@@ -48,24 +48,23 @@
                         <li><hr class="dropdown-divider"></li>
 
                         <!-- Ejemplo de notificaciones -->
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-plane-departure me-2 text-success"></i>Anthony solicitó una vacación</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clock me-2 text-warning"></i>María pidió cambio de turno</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-file-circle-check me-2 text-info"></i>Se aprobó una capacitación</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-capsules me-2 text-success"></i>Se agotaron 3 medicamentos en inventario</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-triangle-exclamation me-2 text-warning"></i>Lote #A452 está próximo a vencer</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-file-medical me-2 text-info"></i>Se registró una nueva compra de proveedores</a></li>
 
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item text-center text-primary fw-semibold" href="#">Ver todas las notificaciones</a></li>
                     </ul>
                 </div>
 
-                <!-- Usuario con imagen y dropdown -->
                 <!--  Usuario con imagen y dropdown -->
                 <div class="dropdown">
                     <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://boomzappow.com/wp-content/uploads/2025/04/Vegapunk-Brain-Brain-Fruit.webp" alt="Usuario" class="rounded-circle me-2" width="35" height="35">
+                        <img src="https://img.freepik.com/free-vector/cute-panda-hug-bamboo-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium_138676-5472.jpg" alt="Usuario" class="rounded-circle me-2" width="35" height="35">
 
                         <!-- Bloque de texto con nombre y rol -->
                         <div class="d-flex flex-column align-items-start">
-                            <span class="fw-semibold">Anthony Jackson</span>
+                            <span class="fw-semibold">Mahiza Gonzalez</span>
                             <small class="text-white" style="align-self:center;">Administrador</small>
                         </div>
                     </a>
@@ -88,84 +87,73 @@
         <div class="sidebar p-3" id="sidebar">
             <h5 class="mb-4">Menú</h5>
             <ul class="nav flex-column">
+
+                <!-- Inicio -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white">
+                    <a href="@Url.Action("Index", "Home")" class="nav-link text-white">
                         <i class="fa-solid fa-house"></i> Inicio
                     </a>
                 </li>
 
+                <!-- Login / Usuarios -->
+                <li class="nav-item">
+                    <a href="@Url.Action("Login", "Auth")" class="nav-link text-white">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </a>
+                </li>
+
+                <!-- Medicamentos -->
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Medicamentos")" class="nav-link text-white">
+                        <i class="fa-solid fa-capsules"></i> Medicamentos
+                    </a>
+                </li>
+
+                <!-- Ventas -->
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle text-white">
-                        <i class="fa-solid fa-diagram-project"></i> Organización
+                        <i class="fa-solid fa-cart-shopping"></i> Ventas
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="@Url.Action("Index", "Areas")"><i class="fa-solid fa-building"></i> Áreas</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Index", "Cargos")"><i class="fa-solid fa-user-tie"></i> Cargos</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Index", "Departamento")"><i class="fa-solid fa-map"></i>Departamentos</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Index", "Municipio")"><i class="fa-solid fa-location-dot"></i> Municipios</a></li>
+                        <li><a href="@Url.Action("Index", "Ventas")" class="dropdown-item"><i class="fa-solid fa-cash-register"></i> Registrar Venta</a></li>
+                        <li><a href="@Url.Action("Historial", "Ventas")" class="dropdown-item"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a></li>
                     </ul>
                 </li>
 
+                <!-- Compras -->
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle text-white">
-                        <i class="fa-solid fa-file-contract"></i> Colaboradores
+                        <i class="fa-solid fa-truck-field"></i> Compras
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="@Url.Action("IndexAdministracionPersonal", "DatosLaborales")"><i class="fa-solid fa-user-plus"></i> Contratación Directa</a></li>
+                        <li><a href="@Url.Action("Index", "Compras")" class="dropdown-item"><i class="fa-solid fa-cart-plus"></i> Registrar Compra</a></li>
+                        <li><a href="@Url.Action("Historial", "Compras")" class="dropdown-item"><i class="fa-solid fa-book"></i> Historial</a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle text-white">
-                        <i class="fa-solid fa-clock"></i> Tiempo
+                <!-- Devoluciones -->
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Devoluciones")" class="nav-link text-white">
+                        <i class="fa-solid fa-rotate-left"></i> Devoluciones
                     </a>
-                    <ul class="dropdown-menu">
-
-                        <!-- Submenú Vacaciones -->
-                        <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-item dropdown-toggle">
-                                <i class="fa-solid fa-umbrella-beach"></i> Vacaciones
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-plane"></i> Solicitudes Vacaciones</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-users"></i> Solicitudes Mi Equipo</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-list-check"></i> Mis Solicitudes</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Submenú Reportes -->
-                        <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-item dropdown-toggle">
-                                <i class="fa-solid fa-chart-line"></i> Reportes
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-calendar-day"></i> Reporte de Asistencia</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clock-rotate-left"></i> Reporte de Horas</a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle text-white">
-                        <i class="fa-solid fa-money-check-dollar"></i> Nómina
+                <!-- Individuos / Clientes -->
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Individuos")" class="nav-link text-white">
+                        <i class="fa-solid fa-user"></i> Individuos
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-file-invoice-dollar"></i> Detalle</a></li>
-                    </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle text-white">
-                        <i class="fa-solid fa-shield-halved"></i> Seguridad
+                <!-- Proveedores -->
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Proveedores")" class="nav-link text-white">
+                        <i class="fa-solid fa-truck"></i> Proveedores
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-gear"></i> Usuarios</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Index", "Roles")"><i class="fa-solid fa-layer-group"></i> Roles</a></li>
-                    </ul>
                 </li>
+
             </ul>
+
         </div>
 
 
