@@ -15,6 +15,7 @@
         }
     </style>
 
+    @* Creación Tabla individuos *@
 
     <div id="TablaIndividuos" class="card p-5 rounded">
         <table id="TablaIndividuos" class="table-responsive table align-middle mb-0 bg-white w-100 table table-striped table-hover table-bordered rounded-2">
@@ -34,7 +35,7 @@
     </div>
 
 
-
+    @* campos a solicitar en la tabla *@
 
     <div id="DivAgregarIndividuos" style="display:none" class="container shadow-lg p-4">
         <form class="row" id="FormAgregarIndividuos">
@@ -44,18 +45,27 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="col-6 pb-5">
-                <label for="ApellidoIndividuos" class="form-label">Nombre </label>
-                <input type="text" class="form-control" id="ApellidoIndividuos" name="NombreIndividuos">
+                <label for="ApellidoIndividuos" class="form-label">Apellido </label>
+                <input type="text" class="form-control" id="ApellidoIndividuos" name="ApellidoIndividuos">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="col-6 pb-5">
-                <label for="TelefonoIndividuos" class="form-label">Nombre </label>
-                <input type="text" class="form-control" id="NombreIndividuos" name="NombreIndividuos">
+                <label for="TelefonoIndividuos" class="form-label">Teléfono </label>
+                <input type="text" class="form-control" id="TelefonoIndividuos" name="TelefonoIndividuos">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-6 pb-5">
+                <label for="DireccionIndividuos" class="form-label">Dirección </label>
+                <input type="text" class="form-control" id="DireccionIndividuos" name="DireccionIndividuos">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-6 pb-5">
+                <label for="EmailIndividuos" class="form-label">Email </label>
+                <input type="text" class="form-control" id="EmailIndividuos" name="EmailIndividuos">
                 <div class="invalid-feedback"></div>
             </div>
 
-
-
+           @* botones *@
 
             <div style="text-align: right; background-color: #D3CECE;" class="p-2 pt-2">
                 <button id="cancelButton" type="button" class="btn btn-danger">
