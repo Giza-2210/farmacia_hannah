@@ -95,7 +95,57 @@ namespace logica
         #endregion
 
         #region CRUD
+        public bool AgregarIndividuo(Individuo_VM Datos, out string? errorMessage)
+        {
+            using (var transaction = bd.Database.BeginTransaction())
+            {
+                try
+                {
+                    // Validar por nombre y apellido
+                    if (ExisteIndividuoConNombreApellido(Datos.Nombre, Datos.Apellido))
+                    {
+                        errorMessage = "Ya existe un individuo con el mismo nombre y apellido.";
+                        return false;
+                    }
 
+                    var NuevoIndividuo = new Individuos
+                    {
+                        IdIndividuos = Guid.NewGuid(),
+                        Nombre = Datos.Nombre.Trim(),
+                        Apellido = Datos.Apellido.Trim(),
+                        Telefono = Datos.Telefono?.Trim(),
+                        Direccion = Datos.Direccion?.Trim(),
+                        Email = Datos.Email?.Trim(),
+                        FechaRegistro = Datos.FechaRegistro ?? DateOnly.FromDateTime(DateTime.Now),
+                        Activo = Datos.Activo ?? true
+                    };
+
+                    bd.Individuos.Add(NuevoIndividuo);
+                    bd.SaveChanges();
+
+                    transaction.Commit();
+
+                    errorMessage = null;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    errorMessage = ex.Message;
+                    return false;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Validaciones
+        private bool ExisteIndividuoConNombreApellido(string nombre, string apellido)
+        {
+            return bd.Individuos.Any(i =>
+                i.Nombre.ToLower() == nombre.ToLower() &&
+                i.Apellido.ToLower() == apellido.ToLower());
+        }
         #endregion
     }
 }
