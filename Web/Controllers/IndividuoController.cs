@@ -61,27 +61,23 @@ namespace Web.Controllers
         }
 
 
-        //[HttpPost]
-        //public IActionResult EliminarDepartamento(int IdDepartamento)
-        //{
-        //    string? errorMessage = null;
-        //    var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    if (string.IsNullOrEmpty(userIdStr))
-        //    {
-        //        return Json(new { success = false, error = "User identifier not found." });
-        //    }
+        [HttpPost]
+        public IActionResult EliminarIndividuos(string IdIndividuos)
+        {
 
-        //    bool resultado = ln.EliminarDepartamento(IdDepartamento, int.Parse(userIdStr), out errorMessage);
+            string? errorMessage = null;
 
-        //    if (resultado)
-        //    {
-        //        return Json(new { success = true });
-        //    }
-        //    else
-        //    {
-        //        return Json(new { success = false, error = errorMessage });
-        //    }
-        //}
+            //bool resultado = ln.EliminarIndividuos(IdIndividuos, int.Parse(userIdStr), out errorMessage);
+            bool resultado = true;
+            if (resultado == true)
+            {
+                return Json(new { success = true });
+            }
+            else
+            {
+                return Json(new { success = false, error = errorMessage });
+            }
+        }
 
         //[HttpPost]
         //public IActionResult EditarDepartamento([FromBody] Departamentos_VM Departamento)

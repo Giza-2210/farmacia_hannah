@@ -108,29 +108,52 @@ $('#cancelButton').on('click', function () {
 
 
 
-$('#GuardarDatosDepartamento').on('click', function () {
-    // Validaciones iniciales
-    var NombreDepartamento = $('#NombreDepartamento').val();
+$('#GuardarDatosIndividuos').on('click', function () {
+    // Obtener valores de los campos
+    var nombre = $('#NombreIndividuos').val();
+    var apellido = $('#ApellidoIndividuos').val();
+    var telefono = $('#TelefonoIndividuos').val();
+    var direccion = $('#DireccionIndividuos').val();
+    var email = $('#EmailIndividuos').val();
 
-    if (!NombreDepartamento || NombreDepartamento.trim() === '') {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Campo requerido',
-            text: 'El nombre de la bodega es obligatorio'
-        });
-        $('#NombreDepartamento').trigger('focus');
+    // Validar campos obligatorios
+    if (!nombre || nombre.trim() === '') {
+        mostrarError('NombreIndividuos', 'El nombre es obligatorio');
+        $('#NombreIndividuos').trigger('focus');
         return;
     }
 
+    if (!apellido || apellido.trim() === '') {
+        mostrarError('ApellidoIndividuos', 'El apellido es obligatorio');
+        $('#ApellidoIndividuos').trigger('focus');
+        return;
+    }
+
+    // Validar formato de email si se proporciona
+    if (email && email.trim() !== '') {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+            mostrarError('EmailIndividuos', 'El formato del email no es válido');
+            $('#EmailIndividuos').trigger('focus');
+            return;
+        }
+    }
 
 
+    // Preparar datos para enviar según el modelo Individuo
     var datosEnvio = {
-        NombreDepartamento: NombreDepartamento.trim(),
+        Nombre: nombre.trim(),
+        Apellido: apellido.trim(),
+        Telefono: telefono ? telefono.trim() : null,
+        Direccion: direccion ? direccion.trim() : null,
+        Email: email ? email.trim() : null
+        
     };
 
+    // Confirmación antes de enviar
     Swal.fire({
         title: '¿Confirmar guardado?',
-        html: `Va a crear El Departamento <strong>"${NombreDepartamento.trim()}"</strong><br>, ¿Desea continuar?`,
+        html: `Va a crear el individuo: <strong>${nombre.trim()} ${apellido.trim()}</strong><br>¿Desea continuar?`,
         icon: 'question',
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
@@ -142,11 +165,21 @@ $('#GuardarDatosDepartamento').on('click', function () {
         }
     });
 });
+function mostrarError(campoId, mensaje) {
+    $('#' + campoId).addClass('is-invalid');
+    $('#' + campoId).siblings('.invalid-feedback').text(mensaje);
+}
+
+
+function cargarTablaIndividuos() {
+    // Recargar la tabla de individuos
+    console.log('Recargando tabla de individuos...');
+}
 
 function enviarDatosAlServidor(datos) {
     // Determinar la acción según si hay IdDepartamento
-    const esEdicion = datos.IdDepartamento && datos.IdDepartamento > 0;
-    const accion = esEdicion ? 'EditarDepartamento' : 'AgregarDepartamento';
+    const esEdicion = datos.IdIndividuos&& datos.IdIndividuos> 0;
+    const accion = esEdicion ? 'EditarDepartamento' : 'AgregarIndividuo';
 
     $.ajax({
         url: Componente.UrlControlador + accion,
@@ -156,8 +189,8 @@ function enviarDatosAlServidor(datos) {
         success: function (response) {
             if (response.success) {
                 const mensaje = esEdicion
-                    ? 'El Departamento se modificó exitosamente'
-                    : 'El Departamento se creó exitosamente';
+                    ? 'El Individuo se modificó exitosamente'
+                    : 'El Individuo se creó exitosamente';
 
                 Swal.fire({
                     icon: 'success',
@@ -193,10 +226,17 @@ function enviarDatosAlServidor(datos) {
 
 
 $('#TablaIndividuos').on('click', '.eliminar-btn', function () {
-    const idDepartamento = $(this).data('iddepartamento');
+    const iddIndividuos = $(this).data('idindividuos'); // ← data attribute en minúscula
+    console.log('ID a eliminar:', iddIndividuos);
+
+    // Verificar que el GUID sea válido
+    if (!iddIndividuos || iddIndividuos === '00000000-0000-0000-0000-000000000000') {
+        Swal.fire('Error', 'ID de individuo no válido', 'error');
+        return;
+    }
     Swal.fire({
-        title: '¿Eliminar Departamento?',
-        text: "Esta acción eliminará el Departamento.",
+        title: '¿Eliminar Individuo?',
+        text: "Esta acción eliminará el Individuo.",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
@@ -206,15 +246,15 @@ $('#TablaIndividuos').on('click', '.eliminar-btn', function () {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: Componente.UrlControlador + 'EliminarDepartamento',
+                url: Componente.UrlControlador + 'EliminarIndividuos',
                 type: 'POST',
-                data: { IdDepartamento: idDepartamento },
+                data: { IdIndividuos: iddIndividuos },
                 success: function (response) {
                     if (response.success) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Eliminada',
-                            text: 'El departamento fue eliminado correctamente.'
+                            text: 'El individuo fue eliminado correctamente.'
                         });
 
                         PoblarTablaIndividuo();
@@ -222,7 +262,7 @@ $('#TablaIndividuos').on('click', '.eliminar-btn', function () {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: response.error || 'No se pudo eliminar el Departamento.'
+                            text: response.error || 'No se pudo eliminar el Individuo.'
                         });
                     }
                 },
