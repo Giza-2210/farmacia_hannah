@@ -1,5 +1,5 @@
 ﻿window.Componente = {
-    UrlControlador: "/Departamento/"
+    UrlControlador: "/Individuo/"
 };
 
 
@@ -9,24 +9,26 @@ var table;
 
 
 
-PoblarTablaDepartamentos();
+PoblarTablaIndividuo();
 
 
 function LimpiarFormulario() {
-    $('#DivAgregarDepartamento').hide();
+    $('#DivAgregarIndividuos').hide();
 
 
-    $('#DivTablaDepartamentos').show();
+    $('#DivTablaIndividuos').show();
 
-    $('#FormAgregarDepartamento')[0].reset();
+    $('#FormAgregarIndividuos')[0].reset();
 }
-function PoblarTablaDepartamentos() {
-    if ($.fn.DataTable.isDataTable('#TablaDeDepartamentos')) {
-        $('#TablaDeDepartamentos').DataTable().destroy();
+
+
+function PoblarTablaIndividuo() {
+    if ($.fn.DataTable.isDataTable('#TablaIndividuos')) {
+        $('#TablaIndividuos').DataTable().destroy();
     }
 
     $.ajax({
-        url: Componente.UrlControlador + "ObtenerListaDepartamentos",
+        url: Componente.UrlControlador + "ObtenerListaIndividuos",
         type: 'POST',
         success: function (response) {
             if (response.error) {
@@ -40,20 +42,24 @@ function PoblarTablaDepartamentos() {
 
 
 
-            table = $('#TablaDeDepartamentos').DataTable({
+            table = $('#TablaIndividuos').DataTable({
                 data: response.data,
                 columns: [
-                    { data: 'nombreDepartamento' },
+                    { data: 'nombre' },
+                    { data: 'apellido' },
+                    { data: 'telefono' },
+                    { data: 'direccion' },
+                    { data: 'email' },
                     {
                         data: 'idDepartamento',
                         render: function (data, type, row) {
                             return `
                                 <div class="text-center">
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-primary editar-btn" data-idDepartamento="${row.idDepartamento}" title="Editar">
+                                        <button class="btn btn-primary editar-btn" data-idIndividuos="${row.idIndividuos}" title="Editar">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
-                                        <button class="btn btn-danger eliminar-btn" data-idDepartamento="${row.idDepartamento}" title="Eliminar">
+                                        <button class="btn btn-danger eliminar-btn" data-idIndividuos="${row.idIndividuos}" title="Eliminar">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </div>
@@ -75,8 +81,8 @@ function PoblarTablaDepartamentos() {
                         text: 'Nuevo',
                         className: 'btn btn-primary',
                         action: function () {
-                            $('#DivAgregarDepartamento').show();
-                            $('#DivTablaDepartamentos').hide();
+                            $('#DivAgregarIndividuos').show();
+                            $('#DivTablaIndividuos').hide();
                         }
                     },
                     { extend: 'excel', text: '<i class="fa-solid fa-file-excel"></i> Excel', className: 'btn btn-success' },
@@ -160,7 +166,7 @@ function enviarDatosAlServidor(datos) {
                     showConfirmButton: true,
                 }).then(function () {
                     esEdicion ? RetornarAIndexDesdeEditar() : LimpiarFormulario();
-                    PoblarTablaDepartamentos();
+                    PoblarTablaIndividuo();
                 });
             } else {
                 Swal.fire({
@@ -186,7 +192,7 @@ function enviarDatosAlServidor(datos) {
 }
 
 
-$('#TablaDeDepartamentos').on('click', '.eliminar-btn', function () {
+$('#TablaIndividuos').on('click', '.eliminar-btn', function () {
     const idDepartamento = $(this).data('iddepartamento');
     Swal.fire({
         title: '¿Eliminar Departamento?',
@@ -211,7 +217,7 @@ $('#TablaDeDepartamentos').on('click', '.eliminar-btn', function () {
                             text: 'El departamento fue eliminado correctamente.'
                         });
 
-                        PoblarTablaDepartamentos();
+                        PoblarTablaIndividuo();
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -232,7 +238,7 @@ $('#TablaDeDepartamentos').on('click', '.eliminar-btn', function () {
     });
 });
 
-$('#TablaDeDepartamentos').on('click', '.editar-btn', function () {
+$('#TablaIndividuos').on('click', '.editar-btn', function () {
     const idDepartamento = $(this).data('iddepartamento');
 
     $.get(Componente.UrlControlador + "FormularioEditar", { IdDepartamento: idDepartamento }, function (html) {
