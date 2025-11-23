@@ -1,6 +1,6 @@
 ﻿namespace logica
 {
-    public class Class1
+    public class Individuo_LN
     {
 
     }
