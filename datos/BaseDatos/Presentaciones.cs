@@ -11,5 +11,7 @@ public partial class Presentaciones
 
     public string? Descripcion { get; set; }
 
+    public bool? Estado { get; set; }
+
     public virtual ICollection<Medicamentos> Medicamentos { get; set; } = new List<Medicamentos>();
 }

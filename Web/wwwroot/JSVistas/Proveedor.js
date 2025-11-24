@@ -1,5 +1,5 @@
 ﻿window.Componente = {
-    UrlControlador: "/Individuo/"
+    UrlControlador: "/Proveedores/"
 };
 
 
@@ -9,28 +9,28 @@ var table;
 
 
 
-PoblarTablaIndividuo();
+PoblarTablaProveedores();
 
 
-$("#TelefonoIndividuos").inputmask("9999-9999");
+$("#TelefonoProveedor").inputmask("9999-9999");
 
 function LimpiarFormulario() {
-    $('#DivAgregarIndividuos').hide();
+    $('#DivAgregarProveedor').hide();
 
 
-    $('#DivTablaIndividuos').show();
+    $('#DivTablaProveedores').show();
 
-    $('#FormAgregarIndividuos')[0].reset();
+    $('#FormAgregarProveedor')[0].reset();
 }
 
 
-function PoblarTablaIndividuo() {
-    if ($.fn.DataTable.isDataTable('#TablaIndividuos')) {
-        $('#TablaIndividuos').DataTable().destroy();
+function PoblarTablaProveedores() {
+    if ($.fn.DataTable.isDataTable('#TablaProveedores')) {
+        $('#TablaProveedores').DataTable().destroy();
     }
 
     $.ajax({
-        url: Componente.UrlControlador + "ObtenerListaIndividuos",
+        url: Componente.UrlControlador + "ObtenerListaProveedores",
         type: 'POST',
         success: function (response) {
             if (response.error) {
@@ -44,24 +44,24 @@ function PoblarTablaIndividuo() {
 
 
 
-            table = $('#TablaIndividuos').DataTable({
+            table = $('#TablaProveedores').DataTable({
                 data: response.data,
                 columns: [
                     { data: 'nombre' },
-                    { data: 'apellido' },
+                    { data: 'nombreContacto' },
                     { data: 'telefono' },
                     { data: 'direccion' },
                     { data: 'email' },
                     {
-                        data: 'idDepartamento',
+                        data: 'idProveedores',
                         render: function (data, type, row) {
                             return `
                                 <div class="text-center">
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-primary editar-btn" data-idIndividuos="${row.idIndividuos}" title="Editar">
+                                        <button class="btn btn-primary editar-btn" data-idProveedores="${row.idProveedores}" title="Editar">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
-                                        <button class="btn btn-danger eliminar-btn" data-idIndividuos="${row.idIndividuos}" title="Eliminar">
+                                        <button class="btn btn-danger eliminar-btn" data-idProveedores="${row.idProveedores}" title="Eliminar">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </div>
@@ -83,8 +83,8 @@ function PoblarTablaIndividuo() {
                         text: 'Nuevo',
                         className: 'btn btn-primary',
                         action: function () {
-                            $('#DivAgregarIndividuos').show();
-                            $('#DivTablaIndividuos').hide();
+                            $('#DivAgregarProveedor').show();
+                            $('#DivTablaProveedores').hide();
                         }
                     },
                     { extend: 'excel', text: '<i class="fa-solid fa-file-excel"></i> Excel', className: 'btn btn-success' },
@@ -110,24 +110,18 @@ $('#cancelButton').on('click', function () {
 
 
 
-$('#GuardarDatosIndividuos').on('click', function () {
+$('#GuardarDatosProveedor').on('click', function () {
     // Obtener valores de los campos
-    var nombre = $('#NombreIndividuos').val();
-    var apellido = $('#ApellidoIndividuos').val();
-    var telefono = $('#TelefonoIndividuos').val();
-    var direccion = $('#DireccionIndividuos').val();
-    var email = $('#EmailIndividuos').val();
+    var nombre = $('#NombreProveedor').val();
+    var contacto = $('#ContactoProveedor').val();
+    var telefono = $('#TelefonoProveedor').val();
+    var direccion = $('#DireccionProveedor').val();
+    var email = $('#EmailProveedor').val();
 
     // Validar campos obligatorios
     if (!nombre || nombre.trim() === '') {
-        mostrarError('NombreIndividuos', 'El nombre es obligatorio');
-        $('#NombreIndividuos').trigger('focus');
-        return;
-    }
-
-    if (!apellido || apellido.trim() === '') {
-        mostrarError('ApellidoIndividuos', 'El apellido es obligatorio');
-        $('#ApellidoIndividuos').trigger('focus');
+        mostrarError('NombreProveedor', 'El nombre del proveedor es obligatorio');
+        $('#NombreProveedor').trigger('focus');
         return;
     }
 
@@ -135,27 +129,25 @@ $('#GuardarDatosIndividuos').on('click', function () {
     if (email && email.trim() !== '') {
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.trim())) {
-            mostrarError('EmailIndividuos', 'El formato del email no es válido');
-            $('#EmailIndividuos').trigger('focus');
+            mostrarError('EmailProveedor', 'El formato del email no es válido');
+            $('#EmailProveedor').trigger('focus');
             return;
         }
     }
 
-
-    // Preparar datos para enviar según el modelo Individuo
+    // Preparar datos para enviar según el modelo Proveedores_VM
     var datosEnvio = {
         Nombre: nombre.trim(),
-        Apellido: apellido.trim(),
+        NombreContacto: contacto ? contacto.trim() : null,
         Telefono: telefono ? telefono.trim() : null,
         Direccion: direccion ? direccion.trim() : null,
         Email: email ? email.trim() : null
-        
     };
 
     // Confirmación antes de enviar
     Swal.fire({
         title: '¿Confirmar guardado?',
-        html: `Va a crear el individuo: <strong>${nombre.trim()} ${apellido.trim()}</strong><br>¿Desea continuar?`,
+        html: `Va a crear el proveedor: <strong>${nombre.trim()}</strong><br>¿Desea continuar?`,
         icon: 'question',
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
@@ -173,18 +165,13 @@ function mostrarError(campoId, mensaje) {
 }
 
 
-function cargarTablaIndividuos() {
-    // Recargar la tabla de individuos
-    console.log('Recargando tabla de individuos...');
-}
-
 function enviarDatosAlServidor(datos) {
 
     // Determinar la acción según si hay IdIndividuo
-    const esEdicion = datos.IdIndividuos &&
-        datos.IdIndividuos !== '' &&
-        datos.IdIndividuos !== '00000000-0000-0000-0000-000000000000';
-    const accion = esEdicion ? 'EditarIndividuo' : 'AgregarIndividuo';
+    const esEdicion = datos.IdProveedores &&
+        datos.IdProveedores !== '' &&
+        datos.IdProveedores !== '00000000-0000-0000-0000-000000000000';
+    const accion = esEdicion ? 'EditarProveedor' : 'AgregarProveedor';
 
     $.ajax({
         url: Componente.UrlControlador + accion,
@@ -194,8 +181,8 @@ function enviarDatosAlServidor(datos) {
         success: function (response) {
             if (response.success) {
                 const mensaje = esEdicion
-                    ? 'El Individuo se modificó exitosamente'
-                    : 'El Individuo se creó exitosamente';
+                    ? 'El Proveedor se modificó exitosamente'
+                    : 'El Proveedor se creó exitosamente';
 
                 Swal.fire({
                     icon: 'success',
@@ -204,7 +191,7 @@ function enviarDatosAlServidor(datos) {
                     showConfirmButton: true,
                 }).then(function () {
                     esEdicion ? RetornarAIndexDesdeEditar() : LimpiarFormulario();
-                    PoblarTablaIndividuo();
+                    PoblarTablaProveedores();
                 });
             } else {
                 Swal.fire({
@@ -230,17 +217,16 @@ function enviarDatosAlServidor(datos) {
 }
 
 
-$('#TablaIndividuos').on('click', '.eliminar-btn', function () {
-    const iddIndividuos = $(this).data('idindividuos'); 
-
+$('#TablaProveedores').on('click', '.eliminar-btn', function () {
+    const id = $(this).data('idproveedores'); 
     // Verificar que el GUID sea válido
-    if (!iddIndividuos || iddIndividuos === '00000000-0000-0000-0000-000000000000') {
-        Swal.fire('Error', 'ID de individuo no válido', 'error');
+    if (!id || id === '00000000-0000-0000-0000-000000000000') {
+        Swal.fire('Error', 'ID de Proveedor no válido', 'error');
         return;
     }
     Swal.fire({
-        title: '¿Eliminar Individuo?',
-        text: "Esta acción eliminará el Individuo.",
+        title: '¿Eliminar Proveedor?',
+        text: "Esta acción eliminará el Proveedor.",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
@@ -250,18 +236,18 @@ $('#TablaIndividuos').on('click', '.eliminar-btn', function () {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: Componente.UrlControlador + 'EliminarIndividuos',
+                url: Componente.UrlControlador + 'EliminarProveedor',
                 type: 'POST',
-                data: { IdIndividuos: iddIndividuos },
+                data: { IdProveedor: id },
                 success: function (response) {
                     if (response.success) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Eliminada',
-                            text: 'El individuo fue eliminado correctamente.'
+                            text: 'El Proveedor fue eliminado correctamente.'
                         });
 
-                        PoblarTablaIndividuo();
+                        PoblarTablaProveedores();
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -282,11 +268,11 @@ $('#TablaIndividuos').on('click', '.eliminar-btn', function () {
     });
 });
 
-$('#TablaIndividuos').on('click', '.editar-btn', function () {
-    const id = $(this).data('idindividuos');
-    $.get(Componente.UrlControlador + "ModificarIndividuo", { IdIndividuo: id }, function (html) {
-        $('#DivModificarIndividuo').show().html(html);
-        $('#DivTablaIndividuos').hide();
+$('#TablaProveedores').on('click', '.editar-btn', function () {
+    const id = $(this).data('idproveedores');
+    $.get(Componente.UrlControlador + "EditarProveedor", { idproveedor: id }, function (html) {
+        $('#DivModificarProveedor').show().html(html);
+        $('#DivTablaProveedores').hide();
         $("#Telefono").inputmask("9999-9999");//Inicaliza el input mask del editar
     }).fail(function () {
         Swal.fire("Error", "No se pudo cargar el formulario de edición.", "error");
@@ -296,21 +282,21 @@ $('#TablaIndividuos').on('click', '.editar-btn', function () {
 
 function RetornarAIndexDesdeEditar() {
     // Ocultar y limpiar completamente el div de edición
-    $('#DivModificarIndividuo').hide().empty();
+    $('#DivModificarProveedor').hide().empty();
 
     // Mostrar nuevamente la tabla principal
-    $('#DivTablaIndividuos').show();
+    $('#DivTablaProveedores').show();
 }
 
-$('#DivModificarIndividuo').on('click', '#cancelButton', function () {
+$('#DivModificarProveedor').on('click', '#cancelButton', function () {
     RetornarAIndexDesdeEditar();
 });
 
-$('#DivModificarIndividuo').on('click', '#ModificarIndividuo', function () {
+$('#DivModificarProveedor').on('click', '#ModificarProveedor', function () {
     // Buscar los campos dentro del formulario de modificación
-    var IdIndividuo = $('#IdIndividuos').val();
+    var IdProveedor = $('#IdProveedores').val();
     var Nombre = $('#Nombre').val();
-    var Apellido = $('#Apellido').val();
+    var NombreContacto = $('#NombreContacto').val();
     var Telefono = $('#Telefono').val();
     var Direccion = $('#Direccion').val();
     var Email = $('#Email').val();
@@ -320,35 +306,39 @@ $('#DivModificarIndividuo').on('click', '#ModificarIndividuo', function () {
         Swal.fire({
             icon: 'warning',
             title: 'Campo requerido',
-            text: 'El nombre es obligatorio'
+            text: 'El nombre del proveedor es obligatorio'
         });
         $('#Nombre').trigger('focus');
         return;
     }
 
-    if (!Apellido || Apellido.trim() === '') {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Campo requerido',
-            text: 'El apellido es obligatorio'
-        });
-        $('#Apellido').trigger('focus');
-        return;
-    }
-
-    if (!IdIndividuo) {
+    if (!IdProveedor) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'No se pudo identificar el individuo a modificar'
+            text: 'No se pudo identificar el proveedor a modificar'
         });
         return;
     }
 
+    // Validar formato de email si se proporciona
+    if (Email && Email.trim() !== '') {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(Email.trim())) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Formato inválido',
+                text: 'El formato del email no es válido'
+            });
+            $('#Email').trigger('focus');
+            return;
+        }
+    }
+
     var datosEnvio = {
-        IdIndividuos: IdIndividuo,
+        IdProveedores: IdProveedor,
         Nombre: Nombre.trim(),
-        Apellido: Apellido.trim(),
+        NombreContacto: NombreContacto ? NombreContacto.trim() : null,
         Telefono: Telefono ? Telefono.trim() : null,
         Direccion: Direccion ? Direccion.trim() : null,
         Email: Email ? Email.trim() : null
@@ -356,8 +346,8 @@ $('#DivModificarIndividuo').on('click', '#ModificarIndividuo', function () {
 
     Swal.fire({
         title: '¿Confirmar modificación?',
-        html: `Va a modificar los datos del individuo:<br>
-               <strong>${Nombre.trim()} ${Apellido.trim()}</strong><br>
+        html: `Va a modificar los datos del proveedor:<br>
+               <strong>${Nombre.trim()}</strong><br>
                ¿Desea continuar?`,
         icon: 'question',
         showCancelButton: true,

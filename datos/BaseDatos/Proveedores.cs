@@ -17,6 +17,8 @@ public partial class Proveedores
 
     public string? Email { get; set; }
 
+    public bool? Estado { get; set; }
+
     public virtual ICollection<Compras> Compras { get; set; } = new List<Compras>();
 
     public virtual ICollection<Medicamentos> Medicamentos { get; set; } = new List<Medicamentos>();

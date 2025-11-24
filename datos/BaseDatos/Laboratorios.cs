@@ -9,5 +9,7 @@ public partial class Laboratorios
 
     public string Nombre { get; set; } = null!;
 
+    public bool? Estado { get; set; }
+
     public virtual ICollection<Medicamentos> Medicamentos { get; set; } = new List<Medicamentos>();
 }

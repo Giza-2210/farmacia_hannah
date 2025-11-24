@@ -1,56 +1,54 @@
 ﻿using logica;
 using Microsoft.AspNetCore.Mvc;
 using modelo;
-using System.Globalization;
-using System.Security.Claims;
 
 namespace Web.Controllers
 {
-    public class IndividuoController : Controller
+    public class ProveedoresController : Controller
     {
+        private readonly Proveedores_LN ln;
 
-        private readonly Individuo_LN ln;
-
-        public IndividuoController()
+        public ProveedoresController()
         {
-            ln = new Individuo_LN();
+            ln = new Proveedores_LN();
         }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult ModificarIndividuo(string IdIndividuo)
+
+        public IActionResult EditarProveedor(string idproveedor)
         {
             string? errorMessage = null;
 
-            if (!Guid.TryParse(IdIndividuo, out Guid guidIndividuo))
+            if (!Guid.TryParse(idproveedor, out Guid guidIndividuo))
             {
                 return Json(new { error = "Invalid Individuo ID format." });
             }
 
-            Individuo_VM? Individuo = ln.ConsultarIndividuo(guidIndividuo, out errorMessage);
+            Proveedores_VM? proveedor = ln.ConsultarProveedor(guidIndividuo, out errorMessage);
 
-            if (Individuo == null)
+            if (proveedor == null)
                 return Json(new { error = errorMessage });
 
-            return PartialView(Individuo);
+            return PartialView(proveedor);
         }
 
         #region Consultas
+
         [HttpPost]
-        public IActionResult ObtenerListaIndividuos()
+        public IActionResult ObtenerListaProveedores()
         {
-            List<Individuo_VM> ListaIndividuo = new List<Individuo_VM>();
+            List<Proveedores_VM> ListaProveedores = new List<Proveedores_VM>();
             string? errorMessage = null;
 
-
-            bool exito = ln.ProporcionarListaIndividuos(ref ListaIndividuo, out errorMessage);
+            bool exito = ln.ProporcionarListaProveedores(ref ListaProveedores, out errorMessage);
 
             if (exito)
             {
-
-                return Json(new { data = ListaIndividuo });
+                return Json(new { data = ListaProveedores });
             }
             else
             {
@@ -58,15 +56,14 @@ namespace Web.Controllers
             }
             #endregion
         }
-
         #region CRUD
         [HttpPost]
 
-        public IActionResult AgregarIndividuo([FromBody] Individuo_VM Individuo)
+        public IActionResult AgregarProveedor([FromBody] Proveedores_VM Proveedor)
         {
             string? errorMessage = null;
 
-            bool resultado = ln.AgregarIndividuo(Individuo, out errorMessage);
+            bool resultado = ln.AgregarProveedor(Proveedor, out errorMessage);
 
             if (resultado)
             {
@@ -80,12 +77,12 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        public IActionResult EliminarIndividuos(string IdIndividuos)
+        public IActionResult EliminarProveedor(string IdProveedor)
         {
 
             string? errorMessage = null;
 
-            bool resultado = ln.EliminarIndividuo(IdIndividuos, out errorMessage);
+            bool resultado = ln.EliminarProveedor(IdProveedor, out errorMessage);
             if (resultado == true)
             {
                 return Json(new { success = true });
@@ -97,11 +94,11 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarIndividuo([FromBody] Individuo_VM Individuo)
+        public IActionResult EditarProveedor([FromBody] Proveedores_VM Proveedor)
         {
             string? errorMessage = null;
 
-            bool resultado = ln.ModificarIndividuo(Individuo, out errorMessage);
+            bool resultado = ln.ModificarProveedor(Proveedor, out errorMessage);
 
             if (resultado)
             {
@@ -113,7 +110,5 @@ namespace Web.Controllers
             }
         }
         #endregion
-
-
     }
 }
