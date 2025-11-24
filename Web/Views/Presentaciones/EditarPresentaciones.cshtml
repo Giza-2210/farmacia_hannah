@@ -1,0 +1,30 @@
+﻿@model modelo.Presentacion_VM
+
+<div id="DivModificarPresentacion"  class="container shadow-lg p-4">
+    <form class="row" id="FormModificarPresentacion">
+        @Html.HiddenFor(model => model.IdPresentaciones)
+
+        <div class="col-12 pb-5">
+            <label for="Nombre" class="form-label">Nombre de la Presentación</label>
+            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="col-12 pb-5">
+            <label for="Descripcion" class="form-label">Descripción</label>
+            @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4" })
+            <div class="invalid-feedback"></div>
+        </div>
+
+        @* botones *@
+
+        <div style="text-align: right; background-color: #D3CECE;" class="p-2 pt-2">
+            <button id="cancelButtonModificar" type="button" class="btn btn-danger">
+                <i class="fa-solid fa-rotate-left"></i> Cancelar
+            </button>
+            <button type="button" id="ModificarPresentacion" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Modificar
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Presentaciones";
+}
+
+@* Estilo del error *@
+<style>
+    form .error {
+        color: red;
+    }
+
+    input.error {
+        border-color: red;
+    }
+</style>
+
+@* Creación Tabla presentaciones *@
+
+<div id="DivTablaPresentacion" class="card p-5 rounded">
+    <table id="TablaPresentacion" class="table-responsive table align-middle mb-0 bg-white w-100 table table-striped table-hover table-bordered rounded-2">
+        <thead class="bg-light">
+            <tr>
+                <th>Nombre de la Presentación</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@* Formulario para agregar presentación *@
+
+<div id="DivAgregarPresentacion" style="display:none" class="container shadow-lg p-4">
+    <form class="row" id="FormAgregarPresentacion">
+        <div class="col-12 pb-5">
+            <label for="NombrePresentacion" class="form-label">Nombre de la Presentación</label>
+            <input type="text" class="form-control" id="NombrePresentacion" name="NombrePresentacion">
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="col-12 pb-5">
+            <label for="DescripcionPresentacion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="DescripcionPresentacion" name="DescripcionPresentacion" rows="3"></textarea>
+            <div class="invalid-feedback"></div>
+        </div>
+
+        @* botones *@
+
+        <div style="text-align: right; background-color: #D3CECE;" class="p-2 pt-2">
+            <button id="cancelButtonPresentacion" type="button" class="btn btn-danger">
+                <i class="fa-solid fa-rotate-left"></i> Cancelar
+            </button>
+            <button type="button" id="GuardarDatosPresentacion" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Agregar
+            </button>
+        </div>
+    </form>
+</div>
+
+<div id="DivModificarPresentacion" style="display:none" class="container shadow-lg p-4">
+    @* Aquí se mostrará el formulario de modificación *@
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/JSVistas/Presentaciones.js"></script>
+}

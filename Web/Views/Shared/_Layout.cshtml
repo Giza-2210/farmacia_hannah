@@ -129,6 +129,13 @@
                     </ul>
                 </li> *@
 
+                <!-- Presentacion -->
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Presentaciones")" class="nav-link text-white">
+                        <i class="fa-solid fa-mortar-pestle"></i> Presentaciones
+                    </a>
+                </li>
+
                 <!-- Categoria -->
                 <li class="nav-item">
                     <a href="@Url.Action("Index", "Categoria")" class="nav-link text-white">
@@ -195,6 +202,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
     <script>
         $(document).ready(function() {
+
             $.extend(true, $.fn.dataTable.defaults, {
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/2.3.4/i18n/es-ES.json'
