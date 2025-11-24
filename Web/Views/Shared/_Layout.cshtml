@@ -99,12 +99,6 @@
                     </a>
                 </li>
 
-                <!-- Login / Usuarios -->
-                <li class="nav-item">
-                    <a href="@Url.Action("Login", "Auth")" class="nav-link text-white">
-                        <i class="fa-solid fa-right-to-bracket"></i> Login
-                    </a>
-                </li>
 
                 <!-- Medicamentos -->
                 <li class="nav-item">
@@ -113,7 +107,7 @@
                     </a>
                 </li>
 
-                <!-- Ventas -->
+@*                 <!-- Ventas -->
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle text-white">
                         <i class="fa-solid fa-cart-shopping"></i> Ventas
@@ -133,12 +127,20 @@
                         <li><a href="@Url.Action("Index", "Compras")" class="dropdown-item"><i class="fa-solid fa-cart-plus"></i> Registrar Compra</a></li>
                         <li><a href="@Url.Action("Historial", "Compras")" class="dropdown-item"><i class="fa-solid fa-book"></i> Historial</a></li>
                     </ul>
+                </li> *@
+
+                <!-- Categoria -->
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Categoria")" class="nav-link text-white">
+                        <i class="fa-solid fa-tags"></i> Categorías
+                    </a>
                 </li>
+
 
                 <!-- Devoluciones -->
                 <li class="nav-item">
-                    <a href="@Url.Action("Index", "Devoluciones")" class="nav-link text-white">
-                        <i class="fa-solid fa-rotate-left"></i> Devoluciones
+                    <a href="@Url.Action("Index", "Laboratorio")" class="nav-link text-white">
+                        <i class="fa-solid fa-flask"></i> Laboratorios
                     </a>
                 </li>
 

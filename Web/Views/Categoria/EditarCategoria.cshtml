@@ -1,0 +1,31 @@
+﻿@model modelo.Categoria_VM
+
+<div id="DivAgregarCategoria"  class="container shadow-lg p-4">
+    <form class="row" id="FormAgregarCategoria">
+
+        @Html.HiddenFor(model => model.IdCategorias)
+
+        <div class="col-12 pb-5">
+            <label for="Nombre" class="form-label">Nombre de la Categoría</label>
+            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control"} })
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="col-12 pb-5">
+            <label for="Descripcion" class="form-label">Descripción</label>
+            @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control", rows = "4" })
+            <div class="invalid-feedback"></div>
+        </div>
+
+        @* botones *@
+
+        <div style="text-align: right; background-color: #D3CECE;" class="p-2 pt-2">
+            <button id="cancelButtonModificar" type="button" class="btn btn-danger">
+                <i class="fa-solid fa-rotate-left"></i> Cancelar
+            </button>
+            <button type="button" id="ModificarCategoria" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Agregar
+            </button>
+        </div>
+    </form>
+</div>

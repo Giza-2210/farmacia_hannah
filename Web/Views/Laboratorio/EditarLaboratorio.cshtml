@@ -1,0 +1,24 @@
+﻿@model modelo.Laboratorio_VM
+
+<div id="DivModificarLab"  class="container shadow-lg p-4">
+
+    @Html.HiddenFor(model => model.IdLaboratorios)
+    <form class="row" id="FormModificarLab">
+        <div class="col-12 pb-5">
+            <label for="NombreLaboratorio" class="form-label">Nombre del Laboratorio</label>
+            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="invalid-feedback"></div>
+        </div>
+
+        @* botones *@
+
+        <div style="text-align: right; background-color: #D3CECE;" class="p-2 pt-2">
+            <button id="cancelButtonLaboratorio" type="button" class="btn btn-danger">
+                <i class="fa-solid fa-rotate-left"></i> Cancelar
+            </button>
+            <button type="button" id="ModificarDatosLaboratorio" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Agregar
+            </button>
+        </div>
+    </form>
+</div>

@@ -4,46 +4,46 @@ using modelo;
 
 namespace Web.Controllers
 {
-    public class LaboratorioController : Controller
+    public class CategoriaController : Controller
     {
-        private readonly Laboratorio_LN ln;
 
-        public LaboratorioController()
+        private readonly Categoria_LN ln;
+
+        public CategoriaController()
         {
-            ln = new Laboratorio_LN();
+            ln = new Categoria_LN();
         }
-
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult EditarLaboratorio(string IdLaboratorio)
+        public IActionResult EditarCategoria(string IdCategoria)
         {
             string? errorMessage = null;
 
-            if (!Guid.TryParse(IdLaboratorio, out Guid guidLaboratorio))
+            if (!Guid.TryParse(IdCategoria, out Guid guidCategoria))
             {
                 return Json(new { error = "Invalid laboratorio ID format." });
             }
 
-            Laboratorio_VM? laboratorio = ln.ConsultarLaboratorio(guidLaboratorio, out errorMessage);
+            Categoria_VM? categoria = ln.ConsultarCategoria(guidCategoria, out errorMessage);
 
-            if (laboratorio == null)
+            if (categoria == null)
                 return Json(new { error = errorMessage });
 
-            return PartialView(laboratorio);
+            return PartialView(categoria);
         }
 
         #region Consultas
 
         [HttpPost]
-        public IActionResult ObtenerListaLaboratorios()
+        public IActionResult ObtenerListaCategorias()
         {
-            List<Laboratorio_VM> Lista = new List<Laboratorio_VM>();
+            List<Categoria_VM> Lista = new List<Categoria_VM>();
             string? errorMessage = null;
 
-            bool exito = ln.ProporcionarListaLaboratorios(ref Lista, out errorMessage);
+            bool exito = ln.ProporcionarListaCategorias(ref Lista, out errorMessage);
 
             if (exito)
             {
@@ -58,11 +58,11 @@ namespace Web.Controllers
         #region CRUD
         [HttpPost]
 
-        public IActionResult AgregarLaboratorio([FromBody] Laboratorio_VM Laboratorio)
+        public IActionResult AgregarCategoria([FromBody] Categoria_VM Cateogria)
         {
             string? errorMessage = null;
 
-            bool resultado = ln.AgregarLaboratorio(Laboratorio, out errorMessage);
+            bool resultado = ln.AgregarCategoria(Cateogria, out errorMessage);
 
             if (resultado)
             {
@@ -76,12 +76,12 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        public IActionResult EliminarLaboratorio(string IdLaboratorio)
+        public IActionResult EliminarCategoria(string IdCategoria)
         {
 
             string? errorMessage = null;
 
-            bool resultado = ln.EliminarLaboratorio(IdLaboratorio, out errorMessage);
+            bool resultado = ln.EliminarCategoria(IdCategoria, out errorMessage);
             if (resultado == true)
             {
                 return Json(new { success = true });
@@ -93,11 +93,11 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarLaboratorio([FromBody] Laboratorio_VM Laboratorio)
+        public IActionResult EditarCategoria([FromBody] Categoria_VM Categoria)
         {
             string? errorMessage = null;
 
-            bool resultado = ln.ModificarLaboratorio(Laboratorio, out errorMessage);
+            bool resultado = ln.ModificarCategoria(Categoria, out errorMessage);
 
             if (resultado)
             {
@@ -109,6 +109,6 @@ namespace Web.Controllers
             }
         }
         #endregion
+
     }
 }
-
